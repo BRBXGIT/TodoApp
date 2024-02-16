@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Todo(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val name: String,
+    val title: String,
     val isCompleted: Boolean,
     val date: String,
     val isInBookmark: Boolean

@@ -2,6 +2,7 @@ package com.example.besttodolist.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.besttodolist.data.TodoDao
 import com.example.besttodolist.data.TodoDb
 import dagger.Module
 import dagger.Provides
@@ -17,11 +18,11 @@ object AppModule {
     //Provide TodoDb
     @Provides
     @Singleton
-    fun provideTodoDb(@ApplicationContext appContext: Context): TodoDb {
+    fun provideTodoDao(@ApplicationContext appContext: Context): TodoDao {
         return Room.databaseBuilder(
             appContext,
             TodoDb::class.java,
             "TodoDb"
-        ).build()
+        ).build().TodoDao()
     }
 }

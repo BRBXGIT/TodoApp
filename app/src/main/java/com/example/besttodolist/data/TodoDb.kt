@@ -8,5 +8,6 @@ import androidx.room.RoomDatabase
     version = 1
 )
 abstract class TodoDb: RoomDatabase() {
-    abstract fun TodoDao() : TodoDao
+
+    abstract fun TodoDao(): TodoDao
 }
