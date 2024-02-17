@@ -1,4 +1,4 @@
-package com.example.besttodolist.screens.main_screen
+package com.example.besttodolist.presentation.main_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

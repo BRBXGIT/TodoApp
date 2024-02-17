@@ -15,6 +15,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.besttodolist.presentation.main_screen.MainScreen
 import com.example.besttodolist.presentation.sign_in.GoogleAuthUiClient
 import com.example.besttodolist.presentation.sign_in.SignInScreen
 import com.example.besttodolist.presentation.sign_in.SignInViewModel
@@ -43,6 +44,12 @@ class MainActivity : ComponentActivity() {
                         val signInViewModel = viewModel<SignInViewModel>()
                         val state by signInViewModel.state.collectAsStateWithLifecycle()
 
+                        LaunchedEffect(key1 = Unit) {
+                            if(googleAuthUiClient.getSignedInUser() != null) {
+                                navController.navigate("main_screen")
+                            }
+                        }
+
                         val launcher = rememberLauncherForActivityResult(
                             contract = ActivityResultContracts.StartIntentSenderForResult(),
                             onResult = { result ->
@@ -64,6 +71,9 @@ class MainActivity : ComponentActivity() {
                                     "Success",
                                     Toast.LENGTH_LONG
                                 ).show()
+
+                                navController.navigate("main_screen")
+                                signInViewModel.resetState()
                             }
                         }
                         
@@ -77,6 +87,23 @@ class MainActivity : ComponentActivity() {
                                             signInIntentSender ?: return@launch
                                         ).build()
                                     )
+                                }
+                            }
+                        )
+                    }
+                    composable(route = "main_screen") {
+                        MainScreen(
+                            userData = googleAuthUiClient.getSignedInUser(),
+                            onSignOut = {
+                                lifecycleScope.launch {
+                                    googleAuthUiClient.signOut()
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Quit",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+
+                                    navController.popBackStack()
                                 }
                             }
                         )
