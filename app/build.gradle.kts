@@ -62,7 +62,7 @@ dependencies {
     //Hilt impl
     implementation("com.google.dagger:hilt-android:2.50")
     kapt("com.google.dagger:hilt-android-compiler:2.50")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     //Coil impl
     implementation("io.coil-kt:coil-compose:2.4.0")
     //FireBase impl
@@ -71,6 +71,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     //Nav impl
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+    //System bars color impl
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
