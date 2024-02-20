@@ -1,7 +1,7 @@
 package com.example.besttodolist.presentation.sign_in
 
 data class SignInResult(
-    val data: com.example.besttodolist.presentation.sign_in.UserData?,
+    val data: UserData?,
     val errorMessage: String?
 )
 
