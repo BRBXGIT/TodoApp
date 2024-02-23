@@ -20,7 +20,6 @@ import com.example.besttodolist.presentation.sign_in.GoogleAuthUiClient
 import com.example.besttodolist.presentation.sign_in.SignInScreen
 import com.example.besttodolist.presentation.sign_in.SignInViewModel
 import com.example.besttodolist.ui.theme.BestTodoListTheme
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.gms.auth.api.identity.Identity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -69,7 +68,7 @@ class MainActivity : ComponentActivity() {
                             if(state.isSignInSuccessful) {
                                 Toast.makeText(
                                     applicationContext,
-                                    "Success",
+                                    "Sign in",
                                     Toast.LENGTH_LONG
                                 ).show()
 
@@ -100,7 +99,7 @@ class MainActivity : ComponentActivity() {
                                     googleAuthUiClient.signOut()
                                     Toast.makeText(
                                         applicationContext,
-                                        "Quit",
+                                        "Sign out",
                                         Toast.LENGTH_LONG
                                     ).show()
 
