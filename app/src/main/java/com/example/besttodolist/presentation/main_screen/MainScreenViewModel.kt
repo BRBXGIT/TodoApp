@@ -53,7 +53,11 @@ class MainScreenViewModel @Inject constructor(
     }
 
     //Get todos by their date
-    fun getTodosByDate(date: String): Flow<List<Todo>> {
-        return todoDao.getTodosByDate(date)
+    fun getUncompletedTodosByDate(date: String): Flow<List<Todo>> {
+        return todoDao.getUncompletedTodosByDate(date)
+    }
+
+    fun getCompletedTodosByDate(date: String): Flow<List<Todo>> {
+        return todoDao.getCompletedTodosByDate(date)
     }
 }

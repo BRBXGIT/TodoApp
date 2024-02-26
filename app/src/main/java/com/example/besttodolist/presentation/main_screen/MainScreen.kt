@@ -1,5 +1,6 @@
 package com.example.besttodolist.presentation.main_screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,13 +15,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -32,9 +36,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.besttodolist.R
+import com.example.besttodolist.data.Todo
 import com.example.besttodolist.presentation.sign_in.UserData
+import kotlinx.coroutines.flow.collectIndexed
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun MainScreen(
@@ -42,7 +51,9 @@ fun MainScreen(
     onSignOut: () -> Unit
 ) {
     val fontForLogo = FontFamily(Font(R.font.protestriot_regular))
+    val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
 
+    //Main column
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -64,7 +75,9 @@ fun MainScreen(
                 fontWeight = FontWeight.Bold,
                 fontFamily = fontForLogo,
                 fontSize = 20.sp,
-                color = Color(0xff6699CC)
+                color = Color(0xff6699CC),
+                modifier = Modifier
+                    .clickable { mainScreenViewModel.upsertTodo("Yes yes yes", "27-02-24") }
             )
             if(userData?.profilePictureUrl != null) {
                 AsyncImage(
@@ -104,14 +117,24 @@ fun MainScreen(
 
         Spacer(modifier = Modifier.height(10.dp))
 
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yy")
+        val currentDate = LocalDateTime.now().format(formatter)
+
+        val unCompletedTodos = mainScreenViewModel.getUncompletedTodosByDate(currentDate).collectAsState(
+            initial = emptyList()
+        )
+        val completedTodos = mainScreenViewModel.getCompletedTodosByDate(currentDate).collectAsState(
+            initial = emptyList()
+        )
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxHeight(0.4f)
                 .fillMaxWidth()
                 .padding(start = 32.dp, end = 32.dp)
         ) {
-            items(3) {
-                TodoItem()
+            items(unCompletedTodos.value) { todo ->
+                TodoItem(todo.id, todo.title, todo.date, todo.isInBookmark)
             }
         }
 
@@ -124,22 +147,20 @@ fun MainScreen(
                 .padding(start = 16.dp),
             contentAlignment = Alignment.CenterStart
         ) {
-            Text(
-                text = "Completed Today",
-                color = Color(0xfff7f7f7),
-                fontSize = 18.sp
-            )
+            Text(text = "Completed Today", color = Color(0xfff7f7f7), fontSize = 18.sp)
         }
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        Box(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.8f)
                 .padding(start = 32.dp, end = 32.dp)
         ) {
-
+            items(completedTodos.value) { todo ->
+                CompletedTodoItem(title = todo.title, date = todo.date)
+            }
         }
     }
 }
