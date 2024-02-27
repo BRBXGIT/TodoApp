@@ -1,6 +1,5 @@
 package com.example.besttodolist.presentation.main_screen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,9 +19,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,9 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.besttodolist.R
-import com.example.besttodolist.data.Todo
 import com.example.besttodolist.presentation.sign_in.UserData
-import kotlinx.coroutines.flow.collectIndexed
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -133,8 +127,8 @@ fun MainScreen(
                 .fillMaxWidth()
                 .padding(start = 32.dp, end = 32.dp)
         ) {
-            items(unCompletedTodos.value) { todo ->
-                TodoItem(todo.id, todo.title, todo.date, todo.isInBookmark)
+            items(unCompletedTodos.value, key = { todo -> todo.id }) { todo ->
+                TodoItem(id = todo.id, title = todo.title, date = todo.date, isInBookmark = todo.isInBookmark, isCompleted = todo.isCompleted)
             }
         }
 
@@ -159,7 +153,7 @@ fun MainScreen(
                 .padding(start = 32.dp, end = 32.dp)
         ) {
             items(completedTodos.value) { todo ->
-                CompletedTodoItem(title = todo.title, date = todo.date)
+                CompletedTodoItem(title = todo.title, date = todo.date, id = todo.id, isInBookmark = todo.isInBookmark, isCompleted = todo.isCompleted)
             }
         }
     }

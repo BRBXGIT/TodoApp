@@ -22,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -37,7 +36,8 @@ fun TodoItem(
     id: Int,
     title: String,
     date: String,
-    isInBookmark: Boolean
+    isInBookmark: Boolean,
+    isCompleted: Boolean
 ) {
     val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
 
@@ -51,6 +51,7 @@ fun TodoItem(
             .shadow(elevation = 6.dp, shape = RoundedCornerShape(20.dp))
             .clip(RoundedCornerShape(20.dp))
             .background(Color(0xff2C4157))
+
     ) {
         Row(
             modifier = Modifier
@@ -60,6 +61,7 @@ fun TodoItem(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Box(
                 modifier = Modifier
                     .width(28.dp)
@@ -67,8 +69,8 @@ fun TodoItem(
                     .clip(CircleShape)
                     .border(width = 4.dp, shape = CircleShape, color = Color(0xff6699CC))
                     .clickable {
-                        mainScreenViewModel.updateTodo(id, title, date, true, isInBookmark)
-                    }
+                        mainScreenViewModel.updateTodo(id = id, title = title, date = date, isCompleted = !isCompleted, isInBookmark = isInBookmark)
+                    } //Updating to_do to completed
             )
 
             Column(
@@ -80,18 +82,32 @@ fun TodoItem(
             }
         }
 
+
         Box(
             modifier = Modifier
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_bookmark),
-                contentDescription = "Bookmark icon",
-                tint = Color(0xfff7f7f7),
-                modifier = Modifier
-                    .size(35.dp)
-            )
+            //Updating bookmark icon
+            if(isInBookmark) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_bookmark_filled),
+                    contentDescription = "Bookmark icon",
+                    tint = Color(0xfff7f7f7),
+                    modifier = Modifier
+                        .size(22.dp)
+                        .clickable { mainScreenViewModel.updateTodo(id = id, title = title, date = date, isCompleted = isCompleted, isInBookmark = !isInBookmark) }
+                )
+            } else {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_bookmark),
+                    contentDescription = "Bookmark icon",
+                    tint = Color(0xfff7f7f7),
+                    modifier = Modifier
+                        .size(22.dp)
+                        .clickable { mainScreenViewModel.updateTodo(id = id, title = title, date = date, isCompleted = isCompleted, isInBookmark = !isInBookmark) }
+                )
+            }
         }
     }
 
@@ -102,7 +118,12 @@ fun TodoItem(
 fun CompletedTodoItem(
     title: String,
     date: String,
+    id: Int,
+    isInBookmark: Boolean,
+    isCompleted: Boolean,
 ) {
+    val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
+
     Spacer(modifier = Modifier.height(6.dp))
 
     //Main row
@@ -113,6 +134,7 @@ fun CompletedTodoItem(
             .clip(RoundedCornerShape(20.dp))
             .background(Color(0x902C4157))
     ) {
+
         Row(
             modifier = Modifier
                 .fillMaxWidth(0.58f)
@@ -127,6 +149,8 @@ fun CompletedTodoItem(
                     .height(28.dp)
                     .clip(CircleShape)
                     .background(Color(0x906699CC))
+                    .clickable { mainScreenViewModel.updateTodo(id = id, title = title, date = date, isCompleted = !isCompleted, isInBookmark = isInBookmark) }
+                    //Updating to_do to unCompleted
             )
 
             Column(
@@ -137,6 +161,7 @@ fun CompletedTodoItem(
                 Text(text = date, fontSize = 12.sp, color = Color(0x906699CC))
             }
         }
+
         Row(
             modifier = Modifier
                 .fillMaxSize()
@@ -145,21 +170,13 @@ fun CompletedTodoItem(
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             Text(text = "Completed", color = Color(0xfff7f7f7), fontSize = 14.sp)
-            Box(
-                contentAlignment = Alignment.Center,
+            Icon(
+                painter = painterResource(id = R.drawable.ic_check),
+                contentDescription = "Completed icon",
+                tint = Color(0xff6699CC),
                 modifier = Modifier
-                    .size(25.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xff6699CC))
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_check),
-                    contentDescription = "Completed icon",
-                    tint = Color(0xff000000),
-                    modifier = Modifier
-                        .size(20.dp)
-                )
-            }
+                    .size(24.dp)
+            )
         }
     }
 
