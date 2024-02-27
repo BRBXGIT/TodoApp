@@ -7,6 +7,7 @@ import com.example.besttodolist.data.TodoDao
 import com.example.besttodolist.data.TodoDb
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,13 +29,25 @@ class MainScreenViewModel @Inject constructor(
         }
     }
 
-    //Update isInBookmark parameter or isCompleted parameter
-    fun updateTodo(
+    //Update isCompleted parameter
+    fun updateTodoIsCompleted(
         id: Int, title: String, date: String,
         isCompleted: Boolean, isInBookmark: Boolean
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            todoDao.updateTodo(
+            todoDao.updateTodoIsCompleted(
+                Todo(id, title, isCompleted, date, isInBookmark)
+            )
+        }
+    }
+
+    //Update isInBookmark parameter
+    fun updateTodoIsInBookmark(
+        id: Int, title: String, date: String,
+        isCompleted: Boolean, isInBookmark: Boolean
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            todoDao.updateTodoIsInBookmark(
                 Todo(id, title, isCompleted, date, isInBookmark)
             )
         }

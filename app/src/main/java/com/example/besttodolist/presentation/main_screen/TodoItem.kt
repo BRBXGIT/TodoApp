@@ -1,5 +1,6 @@
 package com.example.besttodolist.presentation.main_screen
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -31,13 +33,14 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.besttodolist.R
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TodoItem(
+fun LazyItemScope.TodoItem(
     id: Int,
     title: String,
     date: String,
     isInBookmark: Boolean,
-    isCompleted: Boolean
+    isCompleted: Boolean,
 ) {
     val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
 
@@ -48,10 +51,10 @@ fun TodoItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(70.dp)
-            .shadow(elevation = 6.dp, shape = RoundedCornerShape(20.dp))
+            .shadow(8.dp, shape = RoundedCornerShape(20.dp))
             .clip(RoundedCornerShape(20.dp))
             .background(Color(0xff2C4157))
-
+            .animateItemPlacement()
     ) {
         Row(
             modifier = Modifier
@@ -69,7 +72,7 @@ fun TodoItem(
                     .clip(CircleShape)
                     .border(width = 4.dp, shape = CircleShape, color = Color(0xff6699CC))
                     .clickable {
-                        mainScreenViewModel.updateTodo(id = id, title = title, date = date, isCompleted = !isCompleted, isInBookmark = isInBookmark)
+                        mainScreenViewModel.updateTodoIsCompleted(id = id, title = title, date = date, isCompleted = !isCompleted, isInBookmark = isInBookmark)
                     } //Updating to_do to completed
             )
 
@@ -96,7 +99,7 @@ fun TodoItem(
                     tint = Color(0xfff7f7f7),
                     modifier = Modifier
                         .size(22.dp)
-                        .clickable { mainScreenViewModel.updateTodo(id = id, title = title, date = date, isCompleted = isCompleted, isInBookmark = !isInBookmark) }
+                        .clickable { mainScreenViewModel.updateTodoIsInBookmark(id = id, title = title, date = date, isCompleted = isCompleted, isInBookmark = !isInBookmark) }
                 )
             } else {
                 Icon(
@@ -105,7 +108,7 @@ fun TodoItem(
                     tint = Color(0xfff7f7f7),
                     modifier = Modifier
                         .size(22.dp)
-                        .clickable { mainScreenViewModel.updateTodo(id = id, title = title, date = date, isCompleted = isCompleted, isInBookmark = !isInBookmark) }
+                        .clickable { mainScreenViewModel.updateTodoIsInBookmark(id = id, title = title, date = date, isCompleted = isCompleted, isInBookmark = !isInBookmark) }
                 )
             }
         }
@@ -114,8 +117,9 @@ fun TodoItem(
     Spacer(modifier = Modifier.height(6.dp))
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CompletedTodoItem(
+fun LazyItemScope.CompletedTodoItem(
     title: String,
     date: String,
     id: Int,
@@ -133,6 +137,7 @@ fun CompletedTodoItem(
             .height(70.dp)
             .clip(RoundedCornerShape(20.dp))
             .background(Color(0x902C4157))
+            .animateItemPlacement()
     ) {
 
         Row(
@@ -149,7 +154,9 @@ fun CompletedTodoItem(
                     .height(28.dp)
                     .clip(CircleShape)
                     .background(Color(0x906699CC))
-                    .clickable { mainScreenViewModel.updateTodo(id = id, title = title, date = date, isCompleted = !isCompleted, isInBookmark = isInBookmark) }
+                    .clickable {
+                        mainScreenViewModel.updateTodoIsCompleted(id = id, title = title, date = date, isCompleted = !isCompleted, isInBookmark = isInBookmark)
+                    }
                     //Updating to_do to unCompleted
             )
 
@@ -170,6 +177,7 @@ fun CompletedTodoItem(
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             Text(text = "Completed", color = Color(0xfff7f7f7), fontSize = 14.sp)
+
             Icon(
                 painter = painterResource(id = R.drawable.ic_check),
                 contentDescription = "Completed icon",

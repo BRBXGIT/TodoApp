@@ -47,6 +47,9 @@ fun MainScreen(
     val fontForLogo = FontFamily(Font(R.font.protestriot_regular))
     val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
 
+    val formatter = DateTimeFormatter.ofPattern("dd-MM-yy")
+    val currentDate = LocalDateTime.now().format(formatter)
+
     //Main column
     Column(
         modifier = Modifier
@@ -103,16 +106,13 @@ fun MainScreen(
                         append("Today  ")
                     }
                     withStyle(SpanStyle(color = Color(0xff808080), fontSize = 17.sp, fontWeight = FontWeight.Thin)) {
-                        append("07-05-23")
+                        append(currentDate)
                     }
                 }
             )
         }
 
         Spacer(modifier = Modifier.height(10.dp))
-
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yy")
-        val currentDate = LocalDateTime.now().format(formatter)
 
         val unCompletedTodos = mainScreenViewModel.getUncompletedTodosByDate(currentDate).collectAsState(
             initial = emptyList()
@@ -127,7 +127,7 @@ fun MainScreen(
                 .fillMaxWidth()
                 .padding(start = 32.dp, end = 32.dp)
         ) {
-            items(unCompletedTodos.value, key = { todo -> todo.id }) { todo ->
+            items(unCompletedTodos.value.sortedByDescending { todo -> todo.isInBookmark }, key = {todo -> todo.id}) { todo ->
                 TodoItem(id = todo.id, title = todo.title, date = todo.date, isInBookmark = todo.isInBookmark, isCompleted = todo.isCompleted)
             }
         }
@@ -152,7 +152,7 @@ fun MainScreen(
                 .fillMaxHeight(0.8f)
                 .padding(start = 32.dp, end = 32.dp)
         ) {
-            items(completedTodos.value) { todo ->
+            items(completedTodos.value,  key = {todo -> todo.id}) { todo ->
                 CompletedTodoItem(title = todo.title, date = todo.date, id = todo.id, isInBookmark = todo.isInBookmark, isCompleted = todo.isCompleted)
             }
         }

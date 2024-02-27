@@ -17,7 +17,10 @@ interface TodoDao {
     suspend fun deleteTodo(todo: Todo)
 
     @Update
-    suspend fun updateTodo(todo: Todo)
+    suspend fun updateTodoIsCompleted(todo: Todo)
+
+    @Update
+    suspend fun updateTodoIsInBookmark(todo: Todo)
 
     @Query("SELECT * FROM todo WHERE date = :date AND isCompleted = 0")
     fun getUncompletedTodosByDate(date: String): Flow<List<Todo>>
