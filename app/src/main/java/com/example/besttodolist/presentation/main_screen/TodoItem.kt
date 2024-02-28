@@ -53,7 +53,7 @@ fun LazyItemScope.TodoItem(
             .height(70.dp)
             .shadow(8.dp, shape = RoundedCornerShape(20.dp))
             .clip(RoundedCornerShape(20.dp))
-            .background(Color(0xff2C4157))
+            .background(Color(0xff223148))
             .animateItemPlacement()
     ) {
         Row(
@@ -70,7 +70,7 @@ fun LazyItemScope.TodoItem(
                     .width(28.dp)
                     .height(28.dp)
                     .clip(CircleShape)
-                    .border(width = 4.dp, shape = CircleShape, color = Color(0xff6699CC))
+                    .border(width = 4.dp, shape = CircleShape, color = Color(0xff88b7fe))
                     .clickable {
                         mainScreenViewModel.updateTodoIsCompleted(id = id, title = title, date = date, isCompleted = !isCompleted, isInBookmark = isInBookmark)
                     } //Updating to_do to completed
@@ -81,7 +81,7 @@ fun LazyItemScope.TodoItem(
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(text = title, fontSize = 16.sp, color = Color(0xfff7f7f7))
-                Text(text = date, fontSize = 12.sp, color = Color(0xffCC5500))
+                Text(text = date, fontSize = 12.sp, color = Color(0xffc17015))
             }
         }
 
@@ -136,7 +136,7 @@ fun LazyItemScope.CompletedTodoItem(
             .fillMaxWidth()
             .height(70.dp)
             .clip(RoundedCornerShape(20.dp))
-            .background(Color(0x902C4157))
+            .background(Color(0x90223148))
             .animateItemPlacement()
     ) {
 
@@ -153,7 +153,7 @@ fun LazyItemScope.CompletedTodoItem(
                     .width(28.dp)
                     .height(28.dp)
                     .clip(CircleShape)
-                    .background(Color(0x906699CC))
+                    .background(Color(0x904a638c))
                     .clickable {
                         mainScreenViewModel.updateTodoIsCompleted(id = id, title = title, date = date, isCompleted = !isCompleted, isInBookmark = isInBookmark)
                     }
@@ -164,8 +164,8 @@ fun LazyItemScope.CompletedTodoItem(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start
             ) {
-                Text(text = title, fontSize = 16.sp, color = Color(0x906699CC))
-                Text(text = date, fontSize = 12.sp, color = Color(0x906699CC))
+                Text(text = title, fontSize = 16.sp, color = Color(0x9049608a))
+                Text(text = date, fontSize = 12.sp, color = Color(0x9049608a))
             }
         }
 
@@ -181,7 +181,7 @@ fun LazyItemScope.CompletedTodoItem(
             Icon(
                 painter = painterResource(id = R.drawable.ic_check),
                 contentDescription = "Completed icon",
-                tint = Color(0xff6699CC),
+                tint = Color(0xff86aef5),
                 modifier = Modifier
                     .size(24.dp)
             )

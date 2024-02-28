@@ -61,15 +61,15 @@ fun SignInScreen(
     }
 
     val systemUiController = rememberSystemUiController()
-    systemUiController.setNavigationBarColor(Color(0xff122233))
-    systemUiController.setStatusBarColor(Color(0xff122233))
+    systemUiController.setNavigationBarColor(Color(0xff162232))
+    systemUiController.setStatusBarColor(Color(0xff162232))
 
     val fontForLogo = FontFamily(Font(R.font.protestriot_regular))
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xff122233))
+            .background(Color(0xff162232))
             .padding(start = 20.dp, end = 20.dp)
     ) {
         Box(
@@ -83,7 +83,7 @@ fun SignInScreen(
                 fontWeight = FontWeight.Bold,
                 fontFamily = fontForLogo,
                 fontSize = 25.sp,
-                color = Color(0xff6699CC)
+                color = Color(0xff85aff7)
             )
         }
 
@@ -113,7 +113,7 @@ fun SignInScreen(
                     withStyle(SpanStyle(color = Color(0xfff7f7f7), fontSize = 17.sp)) {
                         append("Organize your ")
                     }
-                    withStyle(SpanStyle(color = Color(0xff6699CC), fontSize = 17.sp, fontWeight = FontWeight.Bold)) {
+                    withStyle(SpanStyle(color = Color(0xff7ca8f0), fontSize = 17.sp, fontWeight = FontWeight.Bold)) {
                         append("life")
                     }
                     withStyle(SpanStyle(color = Color(0xfff7f7f7), fontSize = 17.sp)) {
@@ -138,7 +138,7 @@ fun SignInScreen(
                     .height(50.dp),
                 shape = RoundedCornerShape(5.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xff2C4157),
+                    containerColor = Color(0xff223148),
                     contentColor = Color(0xffD3D3D3)
                 ),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp)
@@ -165,7 +165,7 @@ fun SignInScreen(
                     .height(50.dp),
                 shape = RoundedCornerShape(5.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xff2C4157),
+                    containerColor = Color(0xff223148),
                     contentColor = Color(0xffD3D3D3)
                 ),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 10.dp)
@@ -198,7 +198,7 @@ fun SignInScreen(
                 Text(
                     text = "By continue you agree to Todolist's",
                     fontSize = 13.sp,
-                    color = Color(0xff808080),
+                    color = Color(0xff808587),
                     fontWeight = FontWeight.Thin
                 )
                 HyperlinkText(
@@ -206,10 +206,10 @@ fun SignInScreen(
                     linkText = listOf("Terms of Service", "privacy policy"),
                     hyperlinks = listOf("https://github.com/BRBXGIT", "https://github.com/BRBXGIT"),
                     fontSize = 13.sp,
-                    linkTextColor = Color(0xff808080),
+                    linkTextColor = Color(0xff808587),
                     linkTextFontWeight = FontWeight.Thin,
                     linkTextDecoration = TextDecoration.Underline,
-                    fullTextColor = Color(0xff808080)
+                    fullTextColor = Color(0xff808587)
                 )
             }
         }

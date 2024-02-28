@@ -54,7 +54,7 @@ fun MainScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xff122233))
+            .background(Color(0xff162232))
     ) {
 
         Spacer(modifier = Modifier.height(15.dp))
@@ -72,9 +72,9 @@ fun MainScreen(
                 fontWeight = FontWeight.Bold,
                 fontFamily = fontForLogo,
                 fontSize = 20.sp,
-                color = Color(0xff6699CC),
+                color = Color(0xff85aff7),
                 modifier = Modifier
-                    .clickable { mainScreenViewModel.upsertTodo("Yes yes yes", "27-02-24") }
+                    .clickable { mainScreenViewModel.upsertTodo("Yes yes yes", currentDate) }
             )
             if(userData?.profilePictureUrl != null) {
                 AsyncImage(
@@ -105,7 +105,7 @@ fun MainScreen(
                     withStyle(SpanStyle(color = Color(0xfff7f7f7), fontSize = 18.sp)) {
                         append("Today  ")
                     }
-                    withStyle(SpanStyle(color = Color(0xff808080), fontSize = 17.sp, fontWeight = FontWeight.Thin)) {
+                    withStyle(SpanStyle(color = Color(0xff787b7b), fontSize = 17.sp, fontWeight = FontWeight.Thin)) {
                         append(currentDate)
                     }
                 }
