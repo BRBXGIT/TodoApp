@@ -20,19 +20,15 @@ import com.example.besttodolist.presentation.sign_in.GoogleAuthUiClient
 import com.example.besttodolist.presentation.sign_in.SignInScreen
 import com.example.besttodolist.presentation.sign_in.SignInViewModel
 import com.example.besttodolist.ui.theme.BestTodoListTheme
-import com.google.android.gms.auth.api.identity.Identity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val googleAuthUiClient by lazy {
-        GoogleAuthUiClient(
-            context = applicationContext,
-            oneTapClient = Identity.getSignInClient(applicationContext)
-        )
-    }
+    @Inject
+    lateinit var googleAuthUiClient: GoogleAuthUiClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
