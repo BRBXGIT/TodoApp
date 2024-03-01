@@ -1,4 +1,4 @@
-package com.example.besttodolist.presentation
+package com.example.besttodolist.presentation.nav_bar
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -38,6 +38,7 @@ fun BottomBar() {
         containerColor = Color(0xff223148),
         modifier = Modifier
             .height(60.dp)
+            .clip(RoundedCornerShape(20.dp, topEnd = 30.dp))
     ) {
         Row(
             modifier = Modifier

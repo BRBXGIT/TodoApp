@@ -14,26 +14,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
@@ -45,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.besttodolist.R
-import com.example.besttodolist.presentation.BottomBar
+import com.example.besttodolist.presentation.nav_bar.BottomBar
 import com.example.besttodolist.presentation.sign_in.UserData
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import java.time.LocalDateTime
@@ -70,6 +63,7 @@ fun MainScreen(
         bottomBar = { BottomBar() },
         floatingActionButtonPosition = FabPosition.Center
     ) {
+
         //Main column
         Column(
             modifier = Modifier
@@ -79,6 +73,7 @@ fun MainScreen(
 
             Spacer(modifier = Modifier.height(15.dp))
 
+            //Up row with Label and user's icon
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -111,6 +106,7 @@ fun MainScreen(
 
             Spacer(modifier = Modifier.height(10.dp))
 
+            //Box with date
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -139,6 +135,7 @@ fun MainScreen(
                 initial = emptyList()
             )
 
+            //LazyColumn with uncompleted todos
             LazyColumn(
                 modifier = Modifier
                     .fillMaxHeight(0.4f)
@@ -164,6 +161,7 @@ fun MainScreen(
 
             Spacer(modifier = Modifier.height(15.dp))
 
+            //LazyColumn with completed todos
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()

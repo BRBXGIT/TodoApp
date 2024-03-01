@@ -56,6 +56,8 @@ fun LazyItemScope.TodoItem(
             .background(Color(0xff223148))
             .animateItemPlacement()
     ) {
+
+        //Row with complete button, date and title
         Row(
             modifier = Modifier
                 .fillMaxWidth(0.8f)
@@ -76,6 +78,7 @@ fun LazyItemScope.TodoItem(
                     } //Updating to_do to completed
             )
 
+            //Column with title and date
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start
@@ -86,6 +89,7 @@ fun LazyItemScope.TodoItem(
         }
 
 
+        //Box with bookmark icon
         Box(
             modifier = Modifier
                 .fillMaxSize(),
@@ -140,6 +144,7 @@ fun LazyItemScope.CompletedTodoItem(
             .animateItemPlacement()
     ) {
 
+        //Row with uncomplete button, title and date
         Row(
             modifier = Modifier
                 .fillMaxWidth(0.58f)
@@ -156,10 +161,10 @@ fun LazyItemScope.CompletedTodoItem(
                     .background(Color(0x904a638c))
                     .clickable {
                         mainScreenViewModel.updateTodoIsCompleted(id = id, title = title, date = date, isCompleted = !isCompleted, isInBookmark = isInBookmark)
-                    }
-                    //Updating to_do to unCompleted
+                    } //Updating to_do to unCompleted
             )
 
+            //Column with title and date
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start
@@ -169,6 +174,7 @@ fun LazyItemScope.CompletedTodoItem(
             }
         }
 
+        //Row with completed text and icon
         Row(
             modifier = Modifier
                 .fillMaxSize()
