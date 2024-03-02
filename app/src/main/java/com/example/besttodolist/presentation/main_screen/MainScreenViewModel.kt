@@ -18,12 +18,12 @@ class MainScreenViewModel @Inject constructor(
 ): ViewModel() {
 
     //Upsert new to_do
-    fun upsertTodo(title: String, date: String) {
+    fun upsertTodo(title: String, date: String, isInBookmark: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             todoDao.upsertTodo(
                 Todo(
                     0, title,
-                    false, date, false
+                    false, date, isInBookmark
                 )
             )
         }

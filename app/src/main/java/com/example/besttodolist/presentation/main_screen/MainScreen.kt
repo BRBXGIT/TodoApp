@@ -48,7 +48,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun MainScreen(
     userData: UserData?,
-    onSignOut: () -> Unit
+    onSignOut: () -> Unit,
 ) {
     val systemUiController = rememberSystemUiController()
     systemUiController.setNavigationBarColor(Color(0xff223148))
