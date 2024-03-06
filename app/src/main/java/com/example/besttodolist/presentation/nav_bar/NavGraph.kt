@@ -1,0 +1,124 @@
+package com.example.besttodolist.presentation.nav_bar
+
+import android.app.Activity
+import android.transition.Transition
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.example.besttodolist.presentation.main_screen.MainScreen
+import com.example.besttodolist.presentation.sign_in.GoogleAuthUiClient
+import com.example.besttodolist.presentation.sign_in.SignInScreen
+import com.example.besttodolist.presentation.sign_in.SignInViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.launch
+
+@Composable
+fun NavGraph(
+    navController: NavHostController,
+    googleAuthUiClient: GoogleAuthUiClient
+) {
+
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+
+    var startDestination = "sign_in"
+    if(googleAuthUiClient.getSignedInUser() != null) {
+        startDestination = "main_screen"
+    }
+
+    val systemUiController = rememberSystemUiController()
+
+    NavHost(
+        navController = navController,
+        startDestination = startDestination,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None }
+    ) {
+        composable("sign_in") {
+            val signInViewModel = viewModel<SignInViewModel>()
+            val state by signInViewModel.state.collectAsStateWithLifecycle()
+
+            val launcher = rememberLauncherForActivityResult(
+                contract = ActivityResultContracts.StartIntentSenderForResult(),
+                onResult = { result ->
+                    if(result.resultCode == ComponentActivity.RESULT_OK) {
+                        scope.launch {
+                            val signInResult = googleAuthUiClient.signInWithIntent(
+                                intent = result.data ?: return@launch
+                            )
+                            signInViewModel.onSignInResult(signInResult)
+                        }
+                    }
+                }
+            )
+
+            LaunchedEffect(key1 = state.isSignInSuccessful) {
+                if(state.isSignInSuccessful) {
+                    Toast.makeText(
+                        context,
+                        "Sign in",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    navController.navigate("main_screen")
+                    signInViewModel.resetState()
+                }
+            }
+
+            SignInScreen(
+                state = state,
+                onSignInClick = {
+                    scope.launch {
+                        val signInIntentSender = googleAuthUiClient.signIn()
+                        launcher.launch(
+                            IntentSenderRequest.Builder(
+                                signInIntentSender ?: return@launch
+                            ).build()
+                        )
+                    }
+                },
+                systemUiController = systemUiController
+            )
+        }
+
+        composable(route = "main_screen") {
+            MainScreen(
+                userData = googleAuthUiClient.getSignedInUser(),
+                onSignOut = {
+                    scope.launch {
+                        googleAuthUiClient.signOut()
+                        Toast.makeText(
+                            context,
+                            "Sign out",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        navController.navigate("sign_in")
+                    }
+                },
+                navController = navController,
+                systemUiController = systemUiController
+            )
+        }
+    }
+}

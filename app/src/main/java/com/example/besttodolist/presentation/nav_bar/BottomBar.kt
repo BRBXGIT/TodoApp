@@ -45,6 +45,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.besttodolist.R
 import com.example.besttodolist.presentation.main_screen.MainScreenViewModel
 import kotlinx.coroutines.delay
@@ -56,7 +58,9 @@ import java.time.format.DateTimeFormatter
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun BottomBar() {
+fun BottomBar(
+    navController: NavHostController
+) {
 
     val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
 

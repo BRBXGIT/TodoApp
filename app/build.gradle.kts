@@ -71,6 +71,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     //Nav impl
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.24.1-alpha")
     //System bars color impl
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 

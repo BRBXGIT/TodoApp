@@ -21,6 +21,7 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,10 +37,12 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.besttodolist.R
 import com.example.besttodolist.presentation.nav_bar.BottomBar
 import com.example.besttodolist.presentation.sign_in.UserData
+import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -49,18 +52,22 @@ import java.time.format.DateTimeFormatter
 fun MainScreen(
     userData: UserData?,
     onSignOut: () -> Unit,
+    navController: NavHostController,
+    systemUiController: SystemUiController
 ) {
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setNavigationBarColor(Color(0xff223148))
-
     val fontForLogo = FontFamily(Font(R.font.protestriot_regular))
     val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
 
     val formatter = DateTimeFormatter.ofPattern("dd-MM-yy")
     val currentDate = LocalDateTime.now().format(formatter)
 
+    SideEffect {
+        systemUiController.setStatusBarColor(Color(0xff162232))
+        systemUiController.setNavigationBarColor(Color(0xff223148))
+    }
+
     Scaffold(
-        bottomBar = { BottomBar() },
+        bottomBar = { BottomBar(navController) },
         floatingActionButtonPosition = FabPosition.Center
     ) {
 

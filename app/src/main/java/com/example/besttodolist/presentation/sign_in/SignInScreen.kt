@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,14 +41,18 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.besttodolist.R
-import com.example.besttodolist.ui.theme.fontFamily
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.accompanist.systemuicontroller.SystemUiController
 
 @Composable
 fun SignInScreen(
     state: SignInState,
-    onSignInClick: () -> Unit
+    onSignInClick: () -> Unit,
+    systemUiController: SystemUiController
 ) {
+
+    SideEffect {
+        systemUiController.setSystemBarsColor(Color(0xff162232))
+    }
 
     val context = LocalContext.current
     LaunchedEffect(key1 = state.signInErrorMessage) {
@@ -59,10 +64,6 @@ fun SignInScreen(
             ).show()
         }
     }
-
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setNavigationBarColor(Color(0xff162232))
-    systemUiController.setStatusBarColor(Color(0xff162232))
 
     val fontForLogo = FontFamily(Font(R.font.protestriot_regular))
 
