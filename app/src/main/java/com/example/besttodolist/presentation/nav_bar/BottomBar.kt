@@ -117,7 +117,7 @@ fun BottomBar(
                     //Add to_do button
                     Button(
                         onClick = {
-                            mainScreenViewModel.upsertTodo(todoTitle, currentDate, isInBookmark)
+                            mainScreenViewModel.upsertTodo(todoTitle, currentDate, isInBookmark, "00:00")
                             scope.launch {
                                 addTodoSheetState.hide()
                             }
@@ -194,7 +194,11 @@ fun BottomBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Icon(painter = painterResource(id = R.drawable.ic_home_outlined), contentDescription = "Home icon")
+            Icon(
+                painter = painterResource(id = R.drawable.ic_home_outlined),
+                contentDescription = "Home icon",
+                modifier = Modifier.clickable { navController.navigate("main_screen") }
+            )
 
             FloatingActionButton(
                 onClick = {
@@ -210,7 +214,11 @@ fun BottomBar(
                 Icon(painter = painterResource(id = R.drawable.ic_plus), contentDescription = "Plus icon")
             }
 
-            Icon(painter = painterResource(id = R.drawable.ic_calendar_outlined), contentDescription = "Calendar icon")
+            Icon(
+                painter = painterResource(id = R.drawable.ic_calendar_outlined),
+                contentDescription = "Calendar icon",
+                modifier = Modifier.clickable { navController.navigate("calendar_screen") }
+            )
         }
     }
 }

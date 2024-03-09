@@ -1,7 +1,5 @@
 package com.example.besttodolist.presentation.nav_bar
 
-import android.app.Activity
-import android.transition.Transition
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -11,20 +9,15 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.besttodolist.presentation.calendar_screen.CalendarScreen
 import com.example.besttodolist.presentation.main_screen.MainScreen
 import com.example.besttodolist.presentation.sign_in.GoogleAuthUiClient
 import com.example.besttodolist.presentation.sign_in.SignInScreen
@@ -119,6 +112,10 @@ fun NavGraph(
                 navController = navController,
                 systemUiController = systemUiController
             )
+        }
+
+        composable(route = "calendar_screen") {
+            CalendarScreen(navController = navController)
         }
     }
 }

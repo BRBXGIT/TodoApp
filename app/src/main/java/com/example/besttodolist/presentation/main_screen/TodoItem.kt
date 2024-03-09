@@ -41,6 +41,7 @@ fun LazyItemScope.TodoItem(
     date: String,
     isInBookmark: Boolean,
     isCompleted: Boolean,
+    time: String
 ) {
     val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
 
@@ -74,7 +75,14 @@ fun LazyItemScope.TodoItem(
                     .clip(CircleShape)
                     .border(width = 4.dp, shape = CircleShape, color = Color(0xff88b7fe))
                     .clickable {
-                        mainScreenViewModel.updateTodoIsCompleted(id = id, title = title, date = date, isCompleted = !isCompleted, isInBookmark = isInBookmark)
+                        mainScreenViewModel.updateTodoIsCompleted(
+                            id = id,
+                            title = title,
+                            date = date,
+                            isCompleted = !isCompleted,
+                            isInBookmark = isInBookmark,
+                            time = time
+                        )
                     } //Updating to_do to completed
             )
 
@@ -84,7 +92,7 @@ fun LazyItemScope.TodoItem(
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(text = title, fontSize = 16.sp, color = Color(0xfff7f7f7))
-                Text(text = date, fontSize = 12.sp, color = Color(0xffc17015))
+                Text(text = "$date ($time)", fontSize = 12.sp, color = Color(0xffc17015))
             }
         }
 
@@ -103,7 +111,16 @@ fun LazyItemScope.TodoItem(
                     tint = Color(0xfff7f7f7),
                     modifier = Modifier
                         .size(22.dp)
-                        .clickable { mainScreenViewModel.updateTodoIsInBookmark(id = id, title = title, date = date, isCompleted = isCompleted, isInBookmark = !isInBookmark) }
+                        .clickable {
+                            mainScreenViewModel.updateTodoIsInBookmark(
+                                id = id,
+                                title = title,
+                                date = date,
+                                isCompleted = isCompleted,
+                                isInBookmark = !isInBookmark,
+                                time = time
+                            )
+                        }
                 )
             } else {
                 Icon(
@@ -112,7 +129,16 @@ fun LazyItemScope.TodoItem(
                     tint = Color(0xfff7f7f7),
                     modifier = Modifier
                         .size(22.dp)
-                        .clickable { mainScreenViewModel.updateTodoIsInBookmark(id = id, title = title, date = date, isCompleted = isCompleted, isInBookmark = !isInBookmark) }
+                        .clickable {
+                            mainScreenViewModel.updateTodoIsInBookmark(
+                                id = id,
+                                title = title,
+                                date = date,
+                                isCompleted = isCompleted,
+                                isInBookmark = !isInBookmark,
+                                time = time
+                            )
+                        }
                 )
             }
         }
@@ -129,6 +155,7 @@ fun LazyItemScope.CompletedTodoItem(
     id: Int,
     isInBookmark: Boolean,
     isCompleted: Boolean,
+    time: String
 ) {
     val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
 
@@ -160,7 +187,14 @@ fun LazyItemScope.CompletedTodoItem(
                     .clip(CircleShape)
                     .background(Color(0x904a638c))
                     .clickable {
-                        mainScreenViewModel.updateTodoIsCompleted(id = id, title = title, date = date, isCompleted = !isCompleted, isInBookmark = isInBookmark)
+                        mainScreenViewModel.updateTodoIsCompleted(
+                            id = id,
+                            title = title,
+                            date = date,
+                            isCompleted = !isCompleted,
+                            isInBookmark = isInBookmark,
+                            time = time
+                        )
                     } //Updating to_do to unCompleted
             )
 
@@ -170,27 +204,31 @@ fun LazyItemScope.CompletedTodoItem(
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(text = title, fontSize = 16.sp, color = Color(0x9049608a))
-                Text(text = date, fontSize = 12.sp, color = Color(0x9049608a))
+                Text(text = "$date ($time)", fontSize = 12.sp, color = Color(0x9049608a))
             }
         }
 
-        //Row with completed text and icon
-        Row(
+        Box(
+            contentAlignment = Alignment.CenterEnd,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(end = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                .padding(end = 16.dp)
         ) {
-            Text(text = "Completed", color = Color(0xfff7f7f7), fontSize = 14.sp)
+            //Row with completed text and icon
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                Text(text = "Completed", color = Color(0xfff7f7f7), fontSize = 14.sp)
 
-            Icon(
-                painter = painterResource(id = R.drawable.ic_check),
-                contentDescription = "Completed icon",
-                tint = Color(0xff86aef5),
-                modifier = Modifier
-                    .size(24.dp)
-            )
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_check),
+                    contentDescription = "Completed icon",
+                    tint = Color(0xff86aef5),
+                    modifier = Modifier
+                        .size(24.dp)
+                )
+            }
         }
     }
 

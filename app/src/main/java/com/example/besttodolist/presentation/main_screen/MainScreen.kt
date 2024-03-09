@@ -23,6 +23,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,7 +46,6 @@ import com.example.besttodolist.R
 import com.example.besttodolist.presentation.nav_bar.BottomBar
 import com.example.besttodolist.presentation.sign_in.UserData
 import com.google.accompanist.systemuicontroller.SystemUiController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -96,6 +98,7 @@ fun MainScreen(
                     fontSize = 20.sp,
                     color = Color(0xff85aff7),
                 )
+
                 if(userData?.profilePictureUrl != null) {
                     AsyncImage(
                         model = userData.profilePictureUrl,
@@ -137,10 +140,10 @@ fun MainScreen(
 
             val unCompletedTodos = mainScreenViewModel.getUncompletedTodosByDate(currentDate).collectAsState(
                 initial = emptyList()
-            )
+            ).value
             val completedTodos = mainScreenViewModel.getCompletedTodosByDate(currentDate).collectAsState(
                 initial = emptyList()
-            )
+            ).value
 
             //LazyColumn with uncompleted todos
             LazyColumn(
@@ -149,8 +152,8 @@ fun MainScreen(
                     .fillMaxWidth()
                     .padding(start = 32.dp, end = 32.dp)
             ) {
-                items(unCompletedTodos.value.sortedByDescending { todo -> todo.isInBookmark }, key = {todo -> todo.id}) { todo ->
-                    TodoItem(id = todo.id, title = todo.title, date = todo.date, isInBookmark = todo.isInBookmark, isCompleted = todo.isCompleted)
+                items(unCompletedTodos.sortedByDescending { todo -> todo.isInBookmark }, key = {todo -> todo.id}) { todo ->
+                    TodoItem(id = todo.id, title = todo.title, date = todo.date, isInBookmark = todo.isInBookmark, isCompleted = todo.isCompleted, time = todo.time)
                 }
             }
 
@@ -175,8 +178,8 @@ fun MainScreen(
                     .fillMaxHeight(0.821f)
                     .padding(start = 32.dp, end = 32.dp)
             ) {
-                items(completedTodos.value,  key = {todo -> todo.id}) { todo ->
-                    CompletedTodoItem(title = todo.title, date = todo.date, id = todo.id, isInBookmark = todo.isInBookmark, isCompleted = todo.isCompleted)
+                items(completedTodos,  key = {todo -> todo.id}) { todo ->
+                    CompletedTodoItem(title = todo.title, date = todo.date, id = todo.id, isInBookmark = todo.isInBookmark, isCompleted = todo.isCompleted, time = todo.time)
                 }
             }
         }

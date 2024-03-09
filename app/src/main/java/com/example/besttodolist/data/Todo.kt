@@ -10,5 +10,6 @@ data class Todo(
     val title: String,
     val isCompleted: Boolean,
     val date: String,
-    val isInBookmark: Boolean
+    val isInBookmark: Boolean,
+    val time: String
 )

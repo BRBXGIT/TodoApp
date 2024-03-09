@@ -95,7 +95,7 @@ fun SignInScreen(
             contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.sign_in_picture),
+                painter = painterResource(id = R.drawable.sign_in_illustration),
                 contentDescription = "Sign in picture",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
