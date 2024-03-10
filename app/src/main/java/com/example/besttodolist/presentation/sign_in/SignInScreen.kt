@@ -169,7 +169,7 @@ fun SignInScreen(
 
             //Sign in with github button
             Button(
-                onClick = {},
+                onClick = onSignInClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),

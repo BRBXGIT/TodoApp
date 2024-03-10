@@ -7,6 +7,8 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -47,7 +49,7 @@ fun NavGraph(
 
     NavHost(
         navController = navController,
-        startDestination = startDestination,
+        startDestination = "main_screen",
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {

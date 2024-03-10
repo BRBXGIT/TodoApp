@@ -1,7 +1,9 @@
 package com.example.besttodolist.presentation.nav_bar
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,11 +30,13 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -62,6 +66,8 @@ fun BottomBar(
     var openAddTodoSheet by rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val addTodoSheetState = rememberModalBottomSheetState()
+
+    val currentDestination = navController.currentDestination?.route.toString()
 
     if(openAddTodoSheet) {
         //Modal sheet for creating to_do
@@ -189,16 +195,33 @@ fun BottomBar(
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             //Home icon
-            Icon(
-                painter = painterResource(id = R.drawable.ic_home_outlined),
-                contentDescription = "Home icon",
-                modifier = Modifier.clickable { navController.navigate("main_screen") }
-            )
+            if(currentDestination == "main_screen") {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_home_filled),
+                    contentDescription = "Home icon",
+                    tint = Color(0xff85aff7),
+                    modifier = Modifier
+                        .size(28.dp)
+                        .noRippleClickable {
+                            navController.navigate("main_screen")
+                        }
+                )
+            } else {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_home_outlined),
+                    contentDescription = "Home icon",
+                    tint = Color(0xff8f8f8f),
+                    modifier = Modifier
+                        .size(28.dp)
+                        .noRippleClickable {
+                            navController.navigate("main_screen")
+                        }
+                )
+            }
 
             //Icon for open modal sheet
             FloatingActionButton(
                 onClick = {
-                    scope.launch { addTodoSheetState.expand() }
                     openAddTodoSheet = true
                 },
                 contentColor = Color(0xfff7f7f7),
@@ -211,11 +234,37 @@ fun BottomBar(
             }
 
             //Calendar icon
-            Icon(
-                painter = painterResource(id = R.drawable.ic_calendar_outlined),
-                contentDescription = "Calendar icon",
-                modifier = Modifier.clickable { navController.navigate("calendar_screen") }
-            )
+            if(currentDestination == "calendar_screen") {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_calendar_filled),
+                    contentDescription = "Calendar icon",
+                    tint = Color(0xff85aff7),
+                    modifier = Modifier
+                        .size(28.dp)
+                        .noRippleClickable {
+                            navController.navigate("calendar_screen")
+                        }
+                )
+            } else {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_calendar_outlined),
+                    contentDescription = "Calendar icon",
+                    tint = Color(0xff8f8f8f),
+                    modifier = Modifier
+                        .size(28.dp)
+                        .noRippleClickable {
+                            navController.navigate("calendar_screen")
+                        }
+                )
+            }
         }
+    }
+}
+
+//Modifier extension for clicking without ripple
+fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
+    clickable(indication = null,
+        interactionSource = remember { MutableInteractionSource() }) {
+        onClick()
     }
 }

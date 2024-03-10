@@ -12,6 +12,8 @@ class SharedVMCalendarMainScreens: ViewModel() {
 
     var selectedDate: Long = LocalDateTime.now().toMillis()
 
+    var isVisible = false
+
     //Used in main screen to check does today date corresponds to chosen date
     val todayDate: String = LocalDateTime.now().format(formatter)
 

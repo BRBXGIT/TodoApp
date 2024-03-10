@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -91,7 +92,7 @@ fun LazyItemScope.TodoItem(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start
             ) {
-                Text(text = title, fontSize = 16.sp, color = Color(0xfff7f7f7))
+                Text(text = title, fontSize = 16.sp, color = Color(0xfff7f7f7), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Text(text = date, fontSize = 12.sp, color = Color(0xffc17015))
             }
         }
@@ -200,7 +201,7 @@ fun LazyItemScope.CompletedTodoItem(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start
             ) {
-                Text(text = title, fontSize = 16.sp, color = Color(0x9049608a))
+                Text(text = title, fontSize = 16.sp, color = Color(0x9049608a), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Text(text = date, fontSize = 12.sp, color = Color(0x9049608a))
             }
         }
