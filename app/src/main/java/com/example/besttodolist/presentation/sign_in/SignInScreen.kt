@@ -50,10 +50,12 @@ fun SignInScreen(
     systemUiController: SystemUiController
 ) {
 
+    //Change system bars colors
     SideEffect {
         systemUiController.setSystemBarsColor(Color(0xff162232))
     }
 
+    //Check errors during signing in
     val context = LocalContext.current
     LaunchedEffect(key1 = state.signInErrorMessage) {
         state.signInErrorMessage?.let { error ->
@@ -67,12 +69,14 @@ fun SignInScreen(
 
     val fontForLogo = FontFamily(Font(R.font.protestriot_regular))
 
+    //Main column
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xff162232))
             .padding(start = 20.dp, end = 20.dp)
     ) {
+        //Box with logo
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -88,6 +92,7 @@ fun SignInScreen(
             )
         }
 
+        //Box with picture
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -103,6 +108,7 @@ fun SignInScreen(
             )
         }
 
+        //Box with text
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -124,6 +130,7 @@ fun SignInScreen(
             )
         }
 
+        //Column with buttons
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -132,6 +139,7 @@ fun SignInScreen(
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            //Sign in with google button
             Button(
                 onClick = onSignInClick,
                 modifier = Modifier
@@ -159,6 +167,7 @@ fun SignInScreen(
                 }
             }
 
+            //Sign in with github button
             Button(
                 onClick = {},
                 modifier = Modifier
@@ -187,6 +196,7 @@ fun SignInScreen(
             }
         }
 
+        //Box with terms of privacy policy
         Box(
             modifier = Modifier
                 .fillMaxSize(),

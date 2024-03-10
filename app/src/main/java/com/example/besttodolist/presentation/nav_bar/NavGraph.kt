@@ -19,6 +19,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.besttodolist.presentation.calendar_screen.CalendarScreen
 import com.example.besttodolist.presentation.main_screen.MainScreen
+import com.example.besttodolist.presentation.shared_viewModels.SharedVMCalendarMainScreens
 import com.example.besttodolist.presentation.sign_in.GoogleAuthUiClient
 import com.example.besttodolist.presentation.sign_in.SignInScreen
 import com.example.besttodolist.presentation.sign_in.SignInViewModel
@@ -31,9 +32,12 @@ fun NavGraph(
     googleAuthUiClient: GoogleAuthUiClient
 ) {
 
+    val sharedVMCalendarMainScreens = viewModel<SharedVMCalendarMainScreens>()
+
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
+    //Changing start destination if user signed in
     var startDestination = "sign_in"
     if(googleAuthUiClient.getSignedInUser() != null) {
         startDestination = "main_screen"
@@ -65,6 +69,7 @@ fun NavGraph(
                 }
             )
 
+            //Signing in user
             LaunchedEffect(key1 = state.isSignInSuccessful) {
                 if(state.isSignInSuccessful) {
                     Toast.makeText(
@@ -110,12 +115,16 @@ fun NavGraph(
                     }
                 },
                 navController = navController,
-                systemUiController = systemUiController
+                systemUiController = systemUiController,
+                sharedVMCalendarMainScreens = sharedVMCalendarMainScreens
             )
         }
 
         composable(route = "calendar_screen") {
-            CalendarScreen(navController = navController)
+            CalendarScreen(
+                navController = navController,
+                sharedVMCalendarMainScreens = sharedVMCalendarMainScreens
+            )
         }
     }
 }

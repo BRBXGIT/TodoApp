@@ -17,7 +17,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    //Provide TodoDb
+    //Provide todoDao
     @Provides
     @Singleton
     fun provideTodoDao(@ApplicationContext appContext: Context): TodoDao {

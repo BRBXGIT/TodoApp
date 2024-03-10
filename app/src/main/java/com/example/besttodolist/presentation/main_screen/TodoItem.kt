@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.besttodolist.R
 
+//Composable function for uncompleted to_do
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LazyItemScope.TodoItem(
@@ -41,7 +42,6 @@ fun LazyItemScope.TodoItem(
     date: String,
     isInBookmark: Boolean,
     isCompleted: Boolean,
-    time: String
 ) {
     val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
 
@@ -68,6 +68,7 @@ fun LazyItemScope.TodoItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
+            //Button which presented like a box to update to_do to completed
             Box(
                 modifier = Modifier
                     .width(28.dp)
@@ -80,8 +81,7 @@ fun LazyItemScope.TodoItem(
                             title = title,
                             date = date,
                             isCompleted = !isCompleted,
-                            isInBookmark = isInBookmark,
-                            time = time
+                            isInBookmark = isInBookmark
                         )
                     } //Updating to_do to completed
             )
@@ -92,7 +92,7 @@ fun LazyItemScope.TodoItem(
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(text = title, fontSize = 16.sp, color = Color(0xfff7f7f7))
-                Text(text = "$date ($time)", fontSize = 12.sp, color = Color(0xffc17015))
+                Text(text = date, fontSize = 12.sp, color = Color(0xffc17015))
             }
         }
 
@@ -103,7 +103,7 @@ fun LazyItemScope.TodoItem(
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            //Updating bookmark icon
+            //Updating bookmark icon with isInBookmark parameter
             if(isInBookmark) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_bookmark_filled),
@@ -117,8 +117,7 @@ fun LazyItemScope.TodoItem(
                                 title = title,
                                 date = date,
                                 isCompleted = isCompleted,
-                                isInBookmark = !isInBookmark,
-                                time = time
+                                isInBookmark = !isInBookmark
                             )
                         }
                 )
@@ -135,8 +134,7 @@ fun LazyItemScope.TodoItem(
                                 title = title,
                                 date = date,
                                 isCompleted = isCompleted,
-                                isInBookmark = !isInBookmark,
-                                time = time
+                                isInBookmark = !isInBookmark
                             )
                         }
                 )
@@ -147,6 +145,7 @@ fun LazyItemScope.TodoItem(
     Spacer(modifier = Modifier.height(6.dp))
 }
 
+//Composable function for uncompleted to_do
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LazyItemScope.CompletedTodoItem(
@@ -155,7 +154,6 @@ fun LazyItemScope.CompletedTodoItem(
     id: Int,
     isInBookmark: Boolean,
     isCompleted: Boolean,
-    time: String
 ) {
     val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
 
@@ -171,7 +169,7 @@ fun LazyItemScope.CompletedTodoItem(
             .animateItemPlacement()
     ) {
 
-        //Row with uncomplete button, title and date
+        //Row with uncomplete button(presented with box), title and date
         Row(
             modifier = Modifier
                 .fillMaxWidth(0.58f)
@@ -192,8 +190,7 @@ fun LazyItemScope.CompletedTodoItem(
                             title = title,
                             date = date,
                             isCompleted = !isCompleted,
-                            isInBookmark = isInBookmark,
-                            time = time
+                            isInBookmark = isInBookmark
                         )
                     } //Updating to_do to unCompleted
             )
@@ -204,7 +201,7 @@ fun LazyItemScope.CompletedTodoItem(
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(text = title, fontSize = 16.sp, color = Color(0x9049608a))
-                Text(text = "$date ($time)", fontSize = 12.sp, color = Color(0x9049608a))
+                Text(text = date, fontSize = 12.sp, color = Color(0x9049608a))
             }
         }
 

@@ -18,13 +18,12 @@ class MainScreenViewModel @Inject constructor(
 ): ViewModel() {
 
     //Upsert new to_do
-    fun upsertTodo(title: String, date: String, isInBookmark: Boolean, time: String) {
+    fun upsertTodo(title: String, date: String, isInBookmark: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             todoDao.upsertTodo(
                 Todo(
                     0, title,
-                    false, date, isInBookmark,
-                    time
+                    false, date, isInBookmark
                 )
             )
         }
@@ -33,11 +32,11 @@ class MainScreenViewModel @Inject constructor(
     //Update isCompleted parameter
     fun updateTodoIsCompleted(
         id: Int, title: String, date: String,
-        isCompleted: Boolean, isInBookmark: Boolean, time: String
+        isCompleted: Boolean, isInBookmark: Boolean
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             todoDao.updateTodoIsCompleted(
-                Todo(id, title, isCompleted, date, isInBookmark, time)
+                Todo(id, title, isCompleted, date, isInBookmark)
             )
         }
     }
@@ -45,11 +44,11 @@ class MainScreenViewModel @Inject constructor(
     //Update isInBookmark parameter
     fun updateTodoIsInBookmark(
         id: Int, title: String, date: String,
-        isCompleted: Boolean, isInBookmark: Boolean, time: String
+        isCompleted: Boolean, isInBookmark: Boolean
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             todoDao.updateTodoIsInBookmark(
-                Todo(id, title, isCompleted, date, isInBookmark, time)
+                Todo(id, title, isCompleted, date, isInBookmark)
             )
         }
     }
@@ -57,11 +56,11 @@ class MainScreenViewModel @Inject constructor(
     //Delete to_do
     fun deleteTodo(
         id: Int, title: String, date: String,
-        isCompleted: Boolean, isInBookmark: Boolean, time: String
+        isCompleted: Boolean, isInBookmark: Boolean
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             todoDao.deleteTodo(
-                Todo(id, title, isCompleted, date, isInBookmark, time)
+                Todo(id, title, isCompleted, date, isInBookmark)
             )
         }
     }
