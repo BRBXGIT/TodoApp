@@ -7,3 +7,8 @@ With this project you can:
 * Register with your google account
 * Save tasks to local db, and change their value(complited or uncomplited, have they bookmark or not)
 * Plan things that you need to do with a calendar and add tasks for current date
+<p float="left">
+  <img src="https://github.com/BRBXGIT/TodoApp/blob/main/imges/SignIn.jpg" alt="drawing" width="200"/>
+  <img src="https://github.com/BRBXGIT/TodoApp/blob/main/imges/MainScreen2.jpg" alt="drawing" width="200"/>
+  <img src="https://github.com/BRBXGIT/TodoApp/blob/main/imges/CalendarScreen.jpg" alt="drawing" width="200"/>
+</p>
