@@ -146,7 +146,7 @@ fun LazyItemScope.TodoItem(
     Spacer(modifier = Modifier.height(6.dp))
 }
 
-//Composable function for uncompleted to_do
+//Composable function for completed to_do
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LazyItemScope.CompletedTodoItem(
