@@ -1,7 +1,6 @@
 package com.example.besttodolist.presentation.nav_bar
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -49,8 +48,6 @@ import com.example.besttodolist.R
 import com.example.besttodolist.presentation.main_screen.MainScreenViewModel
 import com.example.besttodolist.presentation.shared_viewModels.SharedVMCalendarMainScreens
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

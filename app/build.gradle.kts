@@ -59,6 +59,7 @@ dependencies {
     //Room db impl
     implementation("androidx.room:room-ktx:2.6.1")
     implementation("androidx.compose.animation:animation-graphics-android:1.6.3")
+    implementation("androidx.appcompat:appcompat:1.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
     //Hilt impl
     implementation("com.google.dagger:hilt-android:2.50")
