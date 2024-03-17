@@ -1,4 +1,4 @@
-# TodoApp with ROOM, FIREBASE and COMPOSE
+# TodoApp with ROOM, FIREBASE, HILT and COMPOSE
 
 ## The app where you can save things what you are need to do
 
