@@ -19,6 +19,12 @@ With this project you can:
     </div>
 </div>
 
+#parent {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 <p float="=center" style="text-align: center;">
   <img src="https://github.com/BRBXGIT/TodoApp/blob/main/imges/SignIn.jpg" alt="drawing" width="200"/>
   <img src="https://github.com/BRBXGIT/TodoApp/blob/main/imges/MainScreen2.jpg" alt="drawing" width="200"/>
